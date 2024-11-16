@@ -474,7 +474,6 @@ def _tensor_matrix_multiply(
     #    c) Compute the dot produce for position c[i, j]
     # TODO: Implement for Task 3.4.
     # raise NotImplementedError("Need to implement for Task 3.4")
-    assert a_strides[-1] == b_strides[-2]
 
     for s in range(0, out_size, THREADS_PER_BLOCK):
         if pi < out_shape[-2] and pj < out_shape[-1]:
