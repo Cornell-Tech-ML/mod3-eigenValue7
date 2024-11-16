@@ -249,6 +249,7 @@ if numba.cuda.is_available():
 
         for i in range(size):
             for j in range(size):
+                print(i,j)
                 assert_close(z[i, j], z2[i, j])
 
     @pytest.mark.task3_4

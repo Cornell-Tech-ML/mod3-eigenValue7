@@ -475,14 +475,14 @@ def _tensor_matrix_multiply(
     # TODO: Implement for Task 3.4.
     # raise NotImplementedError("Need to implement for Task 3.4")
     t = 0
-    for s in range(0, out_size, BLOCK_DIM):
-        if i < a_shape[-2] and (pj+s) < a_shape[-1]:
+    for s in range(0, a_shape[-1], BLOCK_DIM):
+        if i < a_shape[1] and (pj+s) < a_shape[2]:
             a_position = batch * a_batch_stride + i*a_strides[-2] + (pj+s)*a_strides[-1] 
             a_shared[pi,pj] = a_storage[a_position]
         else: 
             a_shared[pi,pj] = 0 
 
-        if (pi+s) < b_shape[-2] and j < b_shape[-1]:
+        if (pi+s) < b_shape[1] and j < b_shape[2]:
             b_position = batch * b_batch_stride + (pi+s)*b_strides[-2] + j*b_strides[-1] 
             b_shared[pi,pj] = b_storage[b_position]
         else: 
@@ -490,11 +490,13 @@ def _tensor_matrix_multiply(
 
         cuda.syncthreads()
 
-        for k in range(a_strides[-1]):
+        for k in range(BLOCK_DIM):
             t += a_shared[pi, k] * b_shared[k, pj]
-
-    out_position = batch*out_strides[0] + i*out_strides[1] + j*out_strides[2]
-    out[out_position] = t
+        cuda.syncthreads()
+    
+    if i < out_shape[1] and j < out_shape[2]:
+        out_position = batch*out_strides[0] + i*out_strides[1] + j*out_strides[2]
+        out[out_position] = t
 
 
 tensor_matrix_multiply = jit(_tensor_matrix_multiply)
