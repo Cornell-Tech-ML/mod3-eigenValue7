@@ -474,24 +474,27 @@ def _tensor_matrix_multiply(
     #    c) Compute the dot produce for position c[i, j]
     # TODO: Implement for Task 3.4.
     # raise NotImplementedError("Need to implement for Task 3.4")
-
-    for s in range(0, out_size, THREADS_PER_BLOCK):
-        if pi < out_shape[-2] and pj < out_shape[-1]:
+    t = 0
+    for s in range(0, out_size, BLOCK_DIM):
+        if i < a_shape[-2] and (pj+s) < a_shape[-1]:
             a_position = batch * a_batch_stride + i*a_strides[-2] + (pj+s)*a_strides[-1] 
-            b_position = batch * b_batch_stride + (pi+s)*b_strides[-2] + j*b_strides[-1]
             a_shared[pi,pj] = a_storage[a_position]
-            b_shared[pi,pj] = b_storage[b_position]
         else: 
             a_shared[pi,pj] = 0 
+
+        if (pi+s) < b_shape[-2] and j < b_shape[-1]:
+            b_position = batch * b_batch_stride + (pi+s)*b_strides[-2] + j*b_strides[-1] 
+            b_shared[pi,pj] = b_storage[b_position]
+        else: 
             b_shared[pi,pj] = 0 
 
         cuda.syncthreads()
-        t = 0
-        for k in range(THREADS_PER_BLOCK):
+
+        for k in range(a_strides[-1]):
             t += a_shared[pi, k] * b_shared[k, pj]
 
-        out_position = batch*out_strides[0] + i*out_strides[1] + j*out_strides[2]
-        out[out_position] = t
+    out_position = batch*out_strides[0] + i*out_strides[1] + j*out_strides[2]
+    out[out_position] = t
 
 
 tensor_matrix_multiply = jit(_tensor_matrix_multiply)
