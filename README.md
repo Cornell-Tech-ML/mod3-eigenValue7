@@ -1,6 +1,6 @@
 # MiniTorch Module 3
 * Diagnostics output
-  
+'''
 MAP
  
 ================================================================================
@@ -393,3 +393,4 @@ Parallel structure is already optimal.
 Allocation hoisting:
 No allocation hoisting found
 None
+'''
