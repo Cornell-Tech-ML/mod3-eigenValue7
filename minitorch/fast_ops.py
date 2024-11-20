@@ -168,6 +168,20 @@ def tensor_map(
         in_shape: Shape,
         in_strides: Strides,
     ) -> None:
+        """
+        Applies a function to each element of a tensor.
+
+        This function maps a function `fn` to each element of the input tensor `in_storage` and stores the result in the output tensor `out`.
+
+        Args:
+        ----
+            out (Storage): The output tensor where the result of the mapping will be stored.
+            out_shape (Shape): The shape of the output tensor.
+            out_strides (Strides): The strides of the output tensor.
+            in_storage (Storage): The input tensor to be mapped.
+            in_shape (Shape): The shape of the input tensor.
+            in_strides (Strides): The strides of the input tensor.
+        """
         # TODO: Implement for Task 3.1.
         #raise NotImplementedError("Need to implement for Task 3.1")
        
@@ -223,6 +237,23 @@ def tensor_zip(
         b_shape: Shape,
         b_strides: Strides,
     ) -> None:
+        """
+        Performs element-wise operations on two tensors and stores the result in a out tensor.
+
+        This function applies a fn to each pair of elements from two input tensors `a_storage` and `b_storage`, and stores the result in the output tensor `out`. The operation is specified by the function `fn`, which takes two floats as input and returns a float.
+
+        Args:
+        ----
+            out (Storage): The output tensor where the result will be stored.
+            out_shape (Shape): The shape of the output tensor.
+            out_strides (Strides): The strides of the output tensor.
+            a_storage (Storage): The first input tensor.
+            a_shape (Shape): The shape of the first input tensor.
+            a_strides (Strides): The strides of the first input tensor.
+            b_storage (Storage): The second input tensor.
+            b_shape (Shape): The shape of the second input tensor.
+            b_strides (Strides): The strides of the second input tensor.
+        """
         # TODO: Implement for Task 3.1.
         # raise NotImplementedError("Need to implement for Task 3.1")
         identical = np.array_equal(a_strides, out_strides) and np.array_equal(b_strides, out_strides)
@@ -276,6 +307,22 @@ def tensor_reduce(
         a_strides: Strides,
         reduce_dim: int,
     ) -> None:
+        """
+        Performs tensor reduction operation along a specified dimension.
+
+        This function applies a reduction operation to the input tensor `a_storage` along the dimension specified by `reduce_dim`. The result is stored in the output tensor `out`.
+
+        Args:
+        ----
+            out (Storage): The output tensor where the reduction result will be stored.
+            out_shape (Shape): The shape of the output tensor.
+            out_strides (Strides): The strides of the output tensor.
+            a_storage (Storage): The input tensor to be reduced.
+            a_shape (Shape): The shape of the input tensor.
+            a_strides (Strides): The strides of the input tensor.
+            reduce_dim (int): The dimension along which the reduction operation is performed.
+
+        """
         # TODO: Implement for Task 3.1.
         #  raise NotImplementedError("Need to implement for Task 3.1")
 
@@ -349,7 +396,7 @@ def _tensor_matrix_multiply(
         for i in range(out_shape[1]):  # Rows of a
             for j in range(out_shape[2]):  # Columns of b
                 sum_result = 0
-                a_pos = n * a_batch_stride + i * a_strides[1] # Base position for tensor `a`
+                a_pos = n * a_batch_stride + i * a_strides[1]
                 b_pos = n * b_batch_stride + j * b_strides[2] 
 
                 for _ in range(a_shape[-1]):  # Columns of a and rows of b    
