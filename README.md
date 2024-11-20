@@ -253,7 +253,7 @@
 - Epoch 460 loss 0.3948592373524367 correct 50 time per epoch 1.8872 sec  
 - Epoch 470 loss 0.04882999546839867 correct 50 time per epoch 1.8105 sec  
 - Epoch 480 loss 0.0009739758200163819 correct 50 time per epoch 1.8003 sec  
-- Epoch 490 loss 0.07958671468223957 correct 50 time per epoch 1.8026 sec  ![image](https://github.com/user-attachments/assets/bb21af63-8cef-4c45-9943-f0985c18fa9e)
+- Epoch 490 loss 0.07958671468223957 correct 50 time per epoch 1.8026 sec 
 
 
 ## Split, 100 Hidden
