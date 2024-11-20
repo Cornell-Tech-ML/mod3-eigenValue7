@@ -204,6 +204,57 @@
 
 # GPU
 ## Simple, 100 Hidden
+- Epoch 0 loss 6.113891279472492 correct 32 time per epoch 4.5802 sec  
+- Epoch 10 loss 2.2624806585708166 correct 45 time per epoch 2.3761 sec  
+- Epoch 20 loss 1.4989562907517122 correct 47 time per epoch 1.8635 sec  
+- Epoch 30 loss 1.1379866806456485 correct 50 time per epoch 1.8354 sec  
+- Epoch 40 loss 1.1648527722410957 correct 50 time per epoch 2.0172 sec  
+- Epoch 50 loss 0.6131992134922553 correct 50 time per epoch 1.8044 sec  
+- Epoch 60 loss 0.7661743007153544 correct 50 time per epoch 2.3515 sec  
+- Epoch 70 loss 0.11369302033941471 correct 50 time per epoch 1.7844 sec  
+- Epoch 80 loss 0.24199521642110347 correct 48 time per epoch 1.8037 sec  
+- Epoch 90 loss 0.5747469048526384 correct 50 time per epoch 2.3286 sec  
+- Epoch 100 loss 0.5372063304054708 correct 50 time per epoch 1.8417 sec  
+- Epoch 110 loss 1.2448954064286495 correct 49 time per epoch 1.9255 sec  
+- Epoch 120 loss 0.2790067258146029 correct 50 time per epoch 1.8245 sec  
+- Epoch 130 loss 0.4279978392042516 correct 49 time per epoch 1.8955 sec  
+- Epoch 140 loss 0.21049571980624385 correct 50 time per epoch 2.2227 sec  
+- Epoch 150 loss 0.09072102955262658 correct 50 time per epoch 1.7858 sec  
+- Epoch 160 loss 0.7029798257565021 correct 50 time per epoch 1.9551 sec  
+- Epoch 170 loss 0.5263294928251167 correct 50 time per epoch 1.9138 sec  
+- Epoch 180 loss 0.09729546293658801 correct 50 time per epoch 1.7941 sec  
+- Epoch 190 loss 0.14860638748608196 correct 50 time per epoch 2.2705 sec  
+- Epoch 200 loss 0.6138145424516369 correct 50 time per epoch 2.6260 sec  
+- Epoch 210 loss 0.4996349401967238 correct 50 time per epoch 1.8581 sec  
+- Epoch 220 loss 0.27770383592359266 correct 50 time per epoch 1.7728 sec  
+- Epoch 230 loss 0.04797359632598564 correct 50 time per epoch 1.7762 sec  
+- Epoch 240 loss 0.013455252923930693 correct 50 time per epoch 2.5349 sec  
+- Epoch 250 loss 0.0014942840953477182 correct 50 time per epoch 1.7936 sec  
+- Epoch 260 loss 0.4696428999904467 correct 50 time per epoch 1.8044 sec  
+- Epoch 270 loss 0.09145071489608941 correct 50 time per epoch 1.8024 sec  
+- Epoch 280 loss 1.2252545545237625 correct 49 time per epoch 1.8845 sec  
+- Epoch 290 loss 0.19209089490187115 correct 50 time per epoch 2.5427 sec  
+- Epoch 300 loss 0.18520387248131867 correct 50 time per epoch 1.7981 sec  
+- Epoch 310 loss 0.35685751691487755 correct 50 time per epoch 1.7983 sec  
+- Epoch 320 loss 0.4730478622169642 correct 50 time per epoch 1.8451 sec  
+- Epoch 330 loss 0.04456978639994844 correct 50 time per epoch 1.7887 sec  
+- Epoch 340 loss 0.2168832090748113 correct 50 time per epoch 3.1175 sec  
+- Epoch 350 loss 0.5772737464572637 correct 50 time per epoch 1.9026 sec  
+- Epoch 360 loss 0.12714596681864468 correct 50 time per epoch 1.7838 sec  
+- Epoch 370 loss 0.23836091298149734 correct 50 time per epoch 1.8233 sec  
+- Epoch 380 loss 0.21937047574236052 correct 50 time per epoch 1.8037 sec  
+- Epoch 390 loss 0.5107764274061938 correct 50 time per epoch 2.5291 sec  
+- Epoch 400 loss 0.0770299755355485 correct 50 time per epoch 1.7920 sec  
+- Epoch 410 loss 0.0002508783709545791 correct 50 time per epoch 1.7798 sec  
+- Epoch 420 loss 0.03653913417222186 correct 50 time per epoch 1.7812 sec  
+- Epoch 430 loss 0.028107100023706005 correct 50 time per epoch 1.8499 sec  
+- Epoch 440 loss 0.10339295247678597 correct 50 time per epoch 2.4019 sec  
+- Epoch 450 loss 0.1061196371448609 correct 50 time per epoch 1.7827 sec  
+- Epoch 460 loss 0.3948592373524367 correct 50 time per epoch 1.8872 sec  
+- Epoch 470 loss 0.04882999546839867 correct 50 time per epoch 1.8105 sec  
+- Epoch 480 loss 0.0009739758200163819 correct 50 time per epoch 1.8003 sec  
+- Epoch 490 loss 0.07958671468223957 correct 50 time per epoch 1.8026 sec  ![image](https://github.com/user-attachments/assets/bb21af63-8cef-4c45-9943-f0985c18fa9e)
+
 
 ## Split, 100 Hidden
 - Epoch 0 loss 7.429388183382119 correct 29 time per epoch 5.2242 sec
