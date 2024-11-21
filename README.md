@@ -398,7 +398,7 @@ None
 ````
 
 # 3.4
-![Alt text](graph.png)
+![Alt text](graph_1.png)
 # 3.5
 ### Simple, 100 Hidden
 - Epoch  0  loss  5.383634132899742 correct 36 time per epoch 4.2239 sec
