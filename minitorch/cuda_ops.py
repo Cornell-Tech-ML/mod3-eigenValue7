@@ -492,6 +492,9 @@ def _mm_practice(out: Storage, a: Storage, b: Storage, size: int) -> None:
     if local_i < size and local_j < size:
         sharedA[local_i, local_j] = a[position]
         sharedB[local_i, local_j] = b[position]
+    else:
+        sharedA[local_i, local_j] = 0
+        sharedB[local_i, local_j] = 0
     """
     After writing, all threads synchronize to ensure the shared arrays are up-to-date for all threads.
     Synchronization is crucial because threads run simultaneously, and without it, some values in `sharedA`
