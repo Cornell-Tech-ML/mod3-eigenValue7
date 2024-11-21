@@ -421,23 +421,36 @@ class Tensor:
 
         """
         return self._tensor.shape
-    
+
     @property
-    def dims(self) -> int: 
-        """
-        docstring
+    def dims(self) -> int:
+        """Returns the number of dimensions in the tensor.
+
+        This method returns the number of dimensions in the tensor, which is the length of the shape tuple.
+
+        Returns
+        -------
+            int: The number of dimensions in the tensor.
+
         """
         return self._tensor.dims
-    
-    @property
-    def size(self) -> int: 
 
+    @property
+    def size(self) -> int:
+        """Returns the total number of elements in the tensor.
+
+        This method returns the total number of elements in the tensor, which is the product of all the dimensions.
+
+        Returns
+        -------
+            int: The total number of elements in the tensor.
+
+        """
         return self._tensor.size
 
     # Functions
     # TODO: Implement for Task 2.3.
-    
-    
+
     def __add__(self, a: TensorLike) -> Tensor:
         """Element-wise addition of two tensors.
 
@@ -700,29 +713,29 @@ class Tensor:
             return self.sum() / self.size
 
     def permute(self, *order: int) -> Tensor:
-        """Permute the dimensions of the tensor.
+        """Permutes the dimensions of the tensor.
 
-        This method permutes the dimensions of the current tensor according to the specified order `dim`.
+        This method rearranges the dimensions of the current tensor according to the specified order. The order is specified as a sequence of integers, where each integer represents the new position of the corresponding dimension.
 
         Args:
         ----
-            dim (Optional[int]): The new order of the dimensions.
+            *order (int): The new order of the dimensions.
 
         Returns:
         -------
-            Tensor: The permuted tensor.
+            Tensor: The tensor with permuted dimensions.
 
         """
         return Permute.apply(self, tensor(list(order)))
 
     def view(self, *shape: int) -> Tensor:
-        """Reshapes the tensor to the specified dimensions.
+        """Reshapes the tensor to the specified shape.
 
-        This method reshapes the current tensor to match the specified dimensions `dim`. If `dim` is not provided, the tensor is not reshaped.
+        This method reshapes the current tensor to a new shape specified by the `shape` argument. The new shape must have the same total number of elements as the original tensor.
 
         Args:
         ----
-            dim (Optional[int]): The new dimensions of the tensor.
+            *shape (int): The new shape of the tensor.
 
         Returns:
         -------

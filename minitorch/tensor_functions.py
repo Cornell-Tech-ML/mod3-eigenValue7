@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import random
-from re import A
 from typing import TYPE_CHECKING
 
 import numpy as np
@@ -584,13 +583,13 @@ class Permute(Function):
     def forward(ctx: Context, a: Tensor, order: Tensor) -> Tensor:
         """Forward pass for the Permute function.
 
-        This function permutes the dimensions of the input tensor `t1` according to the specified order `dim`.
+        This function permutes the dimensions of the input tensor `a` according to the specified order `order`.
 
         Args:
         ----
             ctx (Context): The context in which the operation is performed.
-            t1 (Tensor): The input tensor to be permuted.
-            dim (Tensor): The tensor specifying the permutation order.
+            a (Tensor): The input tensor to be permuted.
+            order (Tensor): The tensor specifying the new order of dimensions.
 
         Returns:
         -------
@@ -621,10 +620,10 @@ class Permute(Function):
         order2: List[int] = [
             a[0]
             for a in sorted(
-                enumerate([order[i] for i in range(order.size)]), key=lambda a:a[1]
+                enumerate([order[i] for i in range(order.size)]), key=lambda a: a[1]
             )
         ]
-        return grad_output._new(grad_output._tensor.permute(*order2)),0.0
+        return grad_output._new(grad_output._tensor.permute(*order2)), 0.0
 
 
 class View(Function):

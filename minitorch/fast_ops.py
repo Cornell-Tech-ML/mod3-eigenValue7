@@ -30,6 +30,20 @@ Fn = TypeVar("Fn")
 
 
 def njit(fn: Fn, **kwargs: Any) -> Fn:
+    """Compiles a function for execution on a CPU using Numba's JIT support.
+
+    This function takes a Python function as input and compiles it for execution on a CPU using Numba's JIT support. The compiled function can then be executed on the CPU with improved performance.
+
+    Args:
+    ----
+        fn (Callable): The Python function to be compiled for CPU execution.
+        **kwargs: Additional keyword arguments to be passed to Numba's `njit` function.
+
+    Returns:
+    -------
+        Callable: The compiled CPU kernel function.
+
+    """
     return _njit(inline="always", **kwargs)(fn)  # type: ignore
 
 
@@ -168,8 +182,7 @@ def tensor_map(
         in_shape: Shape,
         in_strides: Strides,
     ) -> None:
-        """
-        Applies a function to each element of a tensor.
+        """Applies a function to each element of a tensor.
 
         This function maps a function `fn` to each element of the input tensor `in_storage` and stores the result in the output tensor `out`.
 
@@ -181,19 +194,20 @@ def tensor_map(
             in_storage (Storage): The input tensor to be mapped.
             in_shape (Shape): The shape of the input tensor.
             in_strides (Strides): The strides of the input tensor.
+
         """
         # TODO: Implement for Task 3.1.
-        #raise NotImplementedError("Need to implement for Task 3.1")
-       
+        # raise NotImplementedError("Need to implement for Task 3.1")
+
         identical = np.array_equal(in_strides, out_strides)
 
-        for i in prange(len(out)): 
-            if identical: 
+        for i in prange(len(out)):
+            if identical:
                 out[i] = fn(in_storage[i])
-                
+
             else:
-                out_index = np.zeros(MAX_DIMS, np.int16)
-                in_index = np.zeros(MAX_DIMS, np.int16)
+                out_index = np.zeros(MAX_DIMS, np.int32)
+                in_index = np.zeros(MAX_DIMS, np.int32)
                 to_index(i, out_shape, out_index)
                 broadcast_index(out_index, out_shape, in_shape, in_index)
                 o = index_to_position(out_index, out_strides)
@@ -225,7 +239,7 @@ def tensor_zip(
         Tensor zip function.
 
     """
-    
+
     def _zip(
         out: Storage,
         out_shape: Shape,
@@ -237,14 +251,13 @@ def tensor_zip(
         b_shape: Shape,
         b_strides: Strides,
     ) -> None:
-        """
-        Performs element-wise operations on two tensors and stores the result in a out tensor.
+        """Applies a binary function to each element of two tensors and stores the result in a third tensor.
 
-        This function applies a fn to each pair of elements from two input tensors `a_storage` and `b_storage`, and stores the result in the output tensor `out`. The operation is specified by the function `fn`, which takes two floats as input and returns a float.
+        This function maps a binary function `fn` to each element of the input tensors `a_storage` and `b_storage` and stores the result in the output tensor `out`. The function supports broadcasting and parallel execution.
 
         Args:
         ----
-            out (Storage): The output tensor where the result will be stored.
+            out (Storage): The output tensor where the result of the zip operation will be stored.
             out_shape (Shape): The shape of the output tensor.
             out_strides (Strides): The strides of the output tensor.
             a_storage (Storage): The first input tensor.
@@ -253,10 +266,13 @@ def tensor_zip(
             b_storage (Storage): The second input tensor.
             b_shape (Shape): The shape of the second input tensor.
             b_strides (Strides): The strides of the second input tensor.
+
         """
         # TODO: Implement for Task 3.1.
         # raise NotImplementedError("Need to implement for Task 3.1")
-        identical = np.array_equal(a_strides, out_strides) and np.array_equal(b_strides, out_strides)
+        identical = np.array_equal(a_strides, out_strides) and np.array_equal(
+            b_strides, out_strides
+        )
         identical = identical and np.array_equal(a_shape, b_shape)
 
         for i in prange(len(out)):
@@ -307,28 +323,29 @@ def tensor_reduce(
         a_strides: Strides,
         reduce_dim: int,
     ) -> None:
-        """
-        Performs tensor reduction operation along a specified dimension.
-
-        This function applies a reduction operation to the input tensor `a_storage` along the dimension specified by `reduce_dim`. The result is stored in the output tensor `out`.
+        """NUMBA tensor reduce function for a specific dimension.
+        This function reduces a tensor along a specified dimension using a given reduction function.
 
         Args:
         ----
-            out (Storage): The output tensor where the reduction result will be stored.
+            out (Storage): The output tensor where the result of the reduction will be stored.
             out_shape (Shape): The shape of the output tensor.
             out_strides (Strides): The strides of the output tensor.
             a_storage (Storage): The input tensor to be reduced.
             a_shape (Shape): The shape of the input tensor.
             a_strides (Strides): The strides of the input tensor.
-            reduce_dim (int): The dimension along which the reduction operation is performed.
+            reduce_dim (int): The dimension along which to reduce the tensor.
+
+        Returns:
+        -------
+            None
+                This function modifies the `out` tensor in-place.
 
         """
         # TODO: Implement for Task 3.1.
         #  raise NotImplementedError("Need to implement for Task 3.1")
-
-        
         reduce_size = a_shape[reduce_dim]
-        
+
         for i in prange(len(out)):
             out_index: Index = np.zeros(MAX_DIMS, np.int32)
             to_index(i, out_shape, out_index)
@@ -337,7 +354,6 @@ def tensor_reduce(
                 out_index[reduce_dim] = s
                 j = index_to_position(out_index, a_strides)
                 out[o] = fn(out[o], a_storage[j])
-
 
     return njit(_reduce, parallel=True)  # type: ignore
 
@@ -389,22 +405,24 @@ def _tensor_matrix_multiply(
     b_batch_stride = b_strides[0] if b_shape[0] > 1 else 0
 
     # TODO: Implement for Task 3.2.
-    #raise NotImplementedError("Need to implement for Task 3.2")
+    # raise NotImplementedError("Need to implement for Task 3.2")
     assert a_shape[-1] == b_shape[-2], "inner dim has to be same"
-    
+
     for n in prange(out_shape[0]):
         for i in range(out_shape[1]):  # Rows of a
             for j in range(out_shape[2]):  # Columns of b
                 sum_result = 0
                 a_pos = n * a_batch_stride + i * a_strides[1]
-                b_pos = n * b_batch_stride + j * b_strides[2] 
+                b_pos = n * b_batch_stride + j * b_strides[2]
 
-                for _ in range(a_shape[-1]):  # Columns of a and rows of b    
+                for _ in range(a_shape[-1]):  # Columns of a and rows of b
                     sum_result += a_storage[a_pos] * b_storage[b_pos]
-                    a_pos += a_strides[2] 
+                    a_pos += a_strides[2]
                     b_pos += b_strides[1]
 
-                out_pos = n * out_strides[0] + i * out_strides[1] + j*out_strides[2] # Ba
+                out_pos = (
+                    n * out_strides[0] + i * out_strides[1] + j * out_strides[2]
+                )  # Ba
                 out[out_pos] = sum_result
 
 

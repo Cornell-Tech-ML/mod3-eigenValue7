@@ -4,7 +4,7 @@ import numba
 
 import minitorch
 
-import time 
+import time
 
 datasets = minitorch.datasets
 FastTensorBackend = minitorch.TensorBackend(minitorch.FastOps)
@@ -97,7 +97,7 @@ class FastTrain:
 
             losses.append(total_loss)
               # End timing the epoch
-            
+
             # Logging
             if epoch % 10 == 0 or epoch == max_epochs:
                 end_time = time.time()

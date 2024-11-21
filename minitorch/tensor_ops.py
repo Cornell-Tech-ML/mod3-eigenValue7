@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-from ast import Index
-from operator import index
 from typing import TYPE_CHECKING, Callable, Optional, Type
 
 import numpy as np
@@ -50,9 +48,9 @@ class TensorOps:
     @staticmethod
     def matrix_multiply(a: Tensor, b: Tensor) -> Tensor:
         """Matrix multiply"""
-        #raise NotImplementedError("Not implemented in this assignment")
+        # raise NotImplementedError("Not implemented in this assignment")
         ...
-    
+
     cuda = False
 
 
@@ -239,8 +237,8 @@ class SimpleOps(TensorOps):
     @staticmethod
     def matrix_multiply(a: "Tensor", b: "Tensor") -> "Tensor":
         """Matrix multiplication"""
-        #raise NotImplementedError("Not implemented in this assignment")
-        
+        # raise NotImplementedError("Not implemented in this assignment")
+
         I, J = a.shape
         J_b, K = b.shape
 
@@ -254,7 +252,7 @@ class SimpleOps(TensorOps):
                 for j in range(J):
                     sum_value += a[i, j] * b[j, k]
                 out[i, k] = sum_value
-        
+
         return out
 
     is_cuda = False
@@ -317,9 +315,9 @@ def tensor_map(
             in_strides (Strides): The strides of the input tensor.
 
         """
-        out_index: Index = np.zeros(MAX_DIMS, np.int16)
-        in_index: Index = np.zeros(MAX_DIMS, np.int16)
-        for i in range(len(out)): 
+        out_index = np.zeros(MAX_DIMS, np.int32)
+        in_index = np.zeros(MAX_DIMS, np.int32)
+        for i in range(len(out)):
             to_index(i, out_shape, out_index)
             broadcast_index(out_index, out_shape, in_shape, in_index)
             o = index_to_position(out_index, out_strides)
@@ -385,9 +383,9 @@ def tensor_zip(
             b_strides (Strides): The strides of the second input tensor.
 
         """
-        out_index: Index = np.zeros(MAX_DIMS, np.int32)
-        a_index: Index = np.zeros(MAX_DIMS, np.int32)
-        b_index: Index = np.zeros(MAX_DIMS, np.int32)
+        out_index = np.zeros(MAX_DIMS, np.int32)
+        a_index = np.zeros(MAX_DIMS, np.int32)
+        b_index = np.zeros(MAX_DIMS, np.int32)
 
         for i in range(len(out)):
             to_index(i, out_shape, out_index)
@@ -397,6 +395,7 @@ def tensor_zip(
             broadcast_index(out_index, out_shape, b_shape, b_index)
             k = index_to_position(b_index, b_strides)
             out[o] = fn(a_storage[j], b_storage[k])
+
     return _zip
 
 
@@ -442,7 +441,7 @@ def tensor_reduce(
             reduce_dim (int): The dimension along which the reduction operation is performed.
 
         """
-        out_index: Index = np.zeros(MAX_DIMS, np.int32)
+        out_index = np.zeros(MAX_DIMS, np.int32)
         reduce_size = a_shape[reduce_dim]
 
         for i in range(len(out)):
